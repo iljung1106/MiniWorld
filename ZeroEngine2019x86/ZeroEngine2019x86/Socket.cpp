@@ -1,55 +1,76 @@
 #include "stdafx.h"
-#include "stdafx.h"
 #include "Socket.h"
 
 Socket::Socket() {
-	WSAStartup(MAKEWORD(2, 2), &wsa);
+	WSADATA wsa;
+	if (WSAStartup(MAKEWORD(2, 2), &wsa)) {
+		cout << "WSA error";
+		WSACleanup();
+		return;
+	}
 
-	skt = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
+	server = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP);
+	if (server == INVALID_SOCKET) {
+		cout << "socket error";
+		closesocket(server);
+		WSACleanup();
+		return;
+	}
+
+	SOCKADDR_IN addr = {0,};
 	addr.sin_family = AF_INET;
-	addr.sin_port = htons(4444);
-	addr.sin_addr.s_addr = inet_addr("127.0.0.1");
+	addr.sin_port = htons(4444); // 포트
+	addr.sin_addr.s_addr = inet_addr("127.0.0.1"); // 주소
 
+	while (connect(server, (SOCKADDR*)&addr, sizeof(addr)));
+	isConnected = true;
+	thread(&Socket::proc_recv, this).detach();
+	//tr = thread([&]() {proc_recv(); });
+	//thread proc1(&Socket::proc_recv, this);
+	//cout << "created Thread" << endl;
 }
 
-
-void Socket::proc_recv() {
-	static char buffer[PACKET_SIZE] = {};
-	static string cmd;
-	while (true) {
-		if (isConnected) {
-			ZeroMemory(&buffer, PACKET_SIZE);
-			recv(skt, buffer, PACKET_SIZE, 0);
-			cmd = buffer;
-			if (cmd == "/exit") break;
-			//strcat(recievedMsg, buffer);
-			//cout << recievedMsg;
-			cout << buffer;
-		}
-	}
-	tr.join();
+Socket::~Socket() {
+	closesocket(server);
+	WSACleanup();
+	cout << "Socket closed" << endl;
 }
 
 void Socket::Update() {
 
 	//cout << ((isConnected) ? "connected\n" : "notConnected\n");
 	if (isConnected) {
+
 	}
 	else {
-		if (connect(skt, (SOCKADDR*)&addr, sizeof(addr))) {
-			isConnected = true;
-			tr = thread([&]() {proc_recv(); });
-			//thread proc1(&Socket::proc_recv, this);
-			cout << "created Thread";
-		}
+		//if (!connect(server, (SOCKADDR*)&addr, sizeof(addr))) {}
 	}
 
+}
+
+
+/* 서버한테서 메세지를 받는 스레드 */
+void Socket::proc_recv() {
+	static char buffer[PACKET_SIZE] = {};
+	static string cmd;
+	while (true) {
+		if (isConnected) {
+			ZeroMemory(&buffer, PACKET_SIZE);
+			recv(server, buffer, PACKET_SIZE, 0);
+			cmd = buffer;
+			if (cmd == "/exit") break;
+			//strcat(recievedMsg, buffer);
+			//cout << recievedMsg;
+			cout << cmd << endl;
+		}
+	}
 }
 
 void Socket::SetMsg(const char* t) {
 	msg = t;
 }
 
+/* 서버로 메세지 보내기 */
 void Socket::SendMessage() {
-	send(skt, msg, strlen(msg), 0);
+	send(server, msg, strlen(msg), 0);
 }

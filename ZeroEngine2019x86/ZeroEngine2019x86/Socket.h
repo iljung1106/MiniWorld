@@ -1,24 +1,28 @@
+#pragma comment(lib, "ws2_32.lib")
+#pragma once
+
+#define _WINSOCK_DEPRECATED_NO_WARNINGS
+
 #include <iostream>
-#include <winsock2.h>
+#include <WinSock2.h>
 #include <thread>
 using namespace std;
 
 #define PACKET_SIZE 1024
 
-#pragma once
-
 class Socket {
 private:
 	void proc_recv();
-	SOCKET skt;
+	SOCKET server;
 	WSADATA wsa;
 	SOCKADDR_IN addr = {};
 	bool isConnected = false;
 	thread* p;
 	thread tr;
 public:
-	char* recievedMsg ="";
+	char* recievedMsg = "";
 	Socket();
+	~Socket();
 	const char* msg;
 	void Update();
 	void SendMessage();
