@@ -11,8 +11,10 @@ public :
 private :
 	void Update(float eTime);
 	void Render();
+
 	ZeroFont* testFont;
 	KoreanInputter* kInputter;
 	Socket* socket;
+	ZeroSprite* player;
 };
 
