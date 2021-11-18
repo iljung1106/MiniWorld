@@ -20,7 +20,7 @@ Socket::Socket() {
 	SOCKADDR_IN addr = {0,};
 	addr.sin_family = AF_INET;
 	addr.sin_port = htons(4444); // 器飘
-	addr.sin_addr.s_addr = inet_addr("127.0.0.1"); // 林家
+	addr.sin_addr.s_addr = inet_addr("211.204.30.40"); // 林家
 
 	while (connect(server, (SOCKADDR*)&addr, sizeof(addr)));
 	isConnected = true;

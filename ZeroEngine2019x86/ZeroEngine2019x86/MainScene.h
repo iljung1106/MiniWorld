@@ -4,9 +4,10 @@
 #include "Zero.h"
 #include "KoreanInputter.h"
 #include "Socket.h"
+#include "KoreanInputter.h"
 class MainScene : public ZeroIScene {
 public :
-	MainScene();
+	MainScene(HINSTANCE hInst);
 	~MainScene();
 private :
 	void Update(float eTime);

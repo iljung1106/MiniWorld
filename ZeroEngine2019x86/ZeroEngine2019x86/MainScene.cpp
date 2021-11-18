@@ -1,14 +1,14 @@
 #include "stdafx.h"
 #include "MainScene.h"
 
-MainScene::MainScene() {
+MainScene::MainScene(HINSTANCE hInst) {
 	char* text = "test";
 	testFont = new ZeroFont(30, text, (char*)"³ª´®°íµñ");
 	testFont->SetColor(0xffff0000);
 	testFont->SetPos(0, 100);
 	PushScene(testFont);
 
-	kInputter = new KoreanInputter();
+	kInputter = new KoreanInputter(hInst);
 
 	socket = new Socket();
 	socket->SetMsg("test");
@@ -30,6 +30,7 @@ void MainScene::Update(float eTime) {
 	if (ZeroInputMgr->GetKey(VK_SPACE) == INPUTMGR_KEYDOWN) {
 		socket->SendMessage();
 	}
+
 
 	if (ZeroInputMgr->GetKey('A') == INPUTMGR_KEYON)
 		player->AddPosX(-300 * eTime);
