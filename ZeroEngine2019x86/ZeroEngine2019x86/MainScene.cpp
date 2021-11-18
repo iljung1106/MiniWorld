@@ -55,3 +55,18 @@ void MainScene::OnRecieveMessage(char* msg) {
 	chats.push_back(testFont);
 
 }
+
+// 서버에서 플레이어 움직임을 받으면 그 플레이어를 움직인다.
+void MainScene::OnRecieveMovement(int num, int dir) {
+
+}
+
+// 서버에서 플레이어가 들어오면 새 플레이어를 만들고 화면에 띄운다.
+void MainScene::OnPlayerJoin(int num) {
+
+}
+
+// 서버에서 플레이어가 들어오면 그 플레이어를 없앤다.
+void MainScene::OnPlayerLeave(int num) {
+
+}
