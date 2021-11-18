@@ -16,5 +16,7 @@ private :
 	KoreanInputter* kInputter;
 	Socket* socket;
 	ZeroSprite* player;
+
+	int moveSpd = 200;
 };
 
