@@ -57,12 +57,14 @@ void Socket::proc_recv() {
 			ZeroMemory(&buffer, PACKET_SIZE);
 			recv(server, buffer, PACKET_SIZE, 0);
 
+			cout << buffer << endl;
+
 			switch (buffer[0]) {
 
 				// message (m(1) + msg(1023))
 				case 'm': {
-					char recievedMsg[PACKET_SIZE - 1];
-					memcpy(recievedMsg, &buffer[1], PACKET_SIZE - 1);
+					char recievedMsg[PACKET_SIZE-1];
+					memcpy(recievedMsg, &buffer[1], PACKET_SIZE-1);
 
 					mainScene->OnRecieveMessage(recievedMsg);
 					break;
@@ -73,11 +75,9 @@ void Socket::proc_recv() {
 					char num[sizeof(int)+1];
 					memcpy(&num, &buffer[1], sizeof(int));
 					num[sizeof(int)] = '\0';
-					char dir[sizeof(int)+1];
-					memcpy(&dir, &buffer[1 + sizeof(int)], sizeof(int));
-					dir[sizeof(int)] = '\0';
+					char dir = buffer[1+sizeof(int)];
 
-					mainScene->OnUserMove(atoi(num), atoi(dir));
+					mainScene->OnUserMove(atoi(num), dir);
 					break;
 				}
 				
@@ -87,7 +87,10 @@ void Socket::proc_recv() {
 					memcpy(&num, &buffer[1], sizeof(int));
 					num[sizeof(int)] = '\0';
 
-					mainScene->OnUserJoin(atoi(num));
+					if (Socket::num == -1)
+						Socket::num = atoi(num);
+					else
+						mainScene->OnUserJoin(atoi(num));
 					break;
 				}
 				

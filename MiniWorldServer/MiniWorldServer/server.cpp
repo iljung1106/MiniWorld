@@ -50,6 +50,8 @@ void openSocket() {
 /* 클라이언트 접속을 받는 스레드 */
 void acceptingClients() {
 	for (int num = 0;; num++) {
+
+		// 입장
 		c.push_back(ClientSocket());
 		c[num].client = accept(server, (SOCKADDR*)&c[num].client_info, &c[num].client_size);
 		if (c[num].client == INVALID_SOCKET) {
@@ -62,11 +64,15 @@ void acceptingClients() {
 		c[num].number = num;
 		
 		cout << "> Client #" << num << " joined" << endl;
-
+		char join_msg[PACKET_SIZE];
+		sprintf_s(join_msg, "j%d", num);
 		char send_msg[PACKET_SIZE];
-		sprintf_s(send_msg, "j[#] Client #%d(이)가 입장했습니다.", num);
-		for (ClientSocket client : c)
+		sprintf_s(send_msg, "m[#] Client #%d joined", num);
+
+		for (ClientSocket client : c) {
+			send(client.client, join_msg, strlen(join_msg), 0);
 			send(client.client, send_msg, strlen(send_msg), 0);
+		}
 
 		thread(recvData, c[num].client, num).detach();
 	}
@@ -74,27 +80,57 @@ void acceptingClients() {
 
 /* 클라이언트에서 보내는 메세지를 받는 스레드 */
 void recvData(SOCKET s, int num) {
-	char msg[PACKET_SIZE];
+	char buffer[PACKET_SIZE];
 	char send_msg[PACKET_SIZE];
 
 	while (1) {
-		ZeroMemory(&msg, PACKET_SIZE);
-		recv(s, msg, PACKET_SIZE, 0);
+		ZeroMemory(&buffer, PACKET_SIZE);
+		recv(s, buffer, PACKET_SIZE, 0);
 
 		// 퇴장
 		if (WSAGetLastError()) {
+
 			cout << "> Client #" << num << " left" << endl;
-			sprintf_s(send_msg, "[#] Client #%d(이)가 퇴장했습니다.", num);
-			for (ClientSocket client : c)
+			char leave_msg[PACKET_SIZE];
+			sprintf_s(leave_msg, "l%d", num);
+			char send_msg[PACKET_SIZE];
+			sprintf_s(send_msg, "m[#] Client #%d left", num);
+
+			for (ClientSocket client : c) {
+				send(client.client, leave_msg, strlen(leave_msg), 0);
 				send(client.client, send_msg, strlen(send_msg), 0);
+			}
 			return;
 		}
 
-		// 메세지
-		cout << "> [Client #" << num << "] " << msg << endl;
-		sprintf_s(send_msg, "m<Client #%d> %s", num, msg);
-		for (ClientSocket client : c)
-			send(client.client, send_msg, strlen(send_msg), 0);
+
+		switch (buffer[0]) {
+
+			// message (m(1) + msg(1023))
+			case 'm':
+				// 메세지
+				char msg[PACKET_SIZE];
+				memcpy(msg, &buffer[1], sizeof(buffer)-1);
+
+				cout << "> [Client #" << num << "] " << msg << endl;
+				sprintf_s(send_msg, "m<Client #%d> %s", num, msg);
+				for (ClientSocket client : c)
+					send(client.client, send_msg, strlen(send_msg), 0);
+				break;
+			
+			// user movement (u(1) + client num(int) + direction(int))
+			case 'u':
+				// 유저 이동
+				char num[sizeof(int)+1];
+				memcpy(&num, &buffer[1], sizeof(int));
+				num[sizeof(int)] = '\0';
+				char dir = buffer[1+sizeof(int)];
+
+				cout << "> Client #" << num << "(이)가 " << dir << "으로 이동 " << endl;
+				for (ClientSocket client : c)
+					send(client.client, buffer, strlen(buffer), 0);
+				break;
+		}
 	}
 }
 

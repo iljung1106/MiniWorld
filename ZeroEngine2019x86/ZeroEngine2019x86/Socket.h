@@ -27,6 +27,8 @@ public:
 	const char* msg;
 	MainScene* mainScene;
 
+	int num = -1;
+
 	void Update();
 	void SendMessage();
 	void SetMsg(const char* t);

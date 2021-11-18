@@ -1,30 +1,32 @@
 #pragma once
+
 #include "ZeroIScene.h"
 #include "ZeroFont.h"
 #include "Zero.h"
-#include "KoreanInputter.h"
 #include "Socket.h"
 #include "KoreanInputter.h"
+
 class MainScene : public ZeroIScene {
-public:
-	MainScene();
-	~MainScene();
-
-	void OnRecieveMessage(char* msg);
-	void OnUserMove(int num, int dir);
-	void OnUserJoin(int num);
-	void OnUserLeave(int num);
-
 private:
+	Socket* socket;
+	KoreanInputter* kInputter;
+	ZeroSprite* me;
+	map<int, ZeroSprite*> users;
+	list<ZeroFont*> chats;
+
+	float eTime;
+
+	int moveSpd = 200;
+
 	void Update(float eTime);
 	void Render();
 
-	list<ZeroFont*> chats;
-	KoreanInputter* kInputter;
-	Socket* socket;
-	ZeroSprite* me;
-	list<ZeroSprite*> users;
+public:
+	MainScene();
 
-	int moveSpd = 200;
+	void OnRecieveMessage(char* msg);
+	void OnUserMove(int num, char dir);
+	void OnUserJoin(int num);
+	void OnUserLeave(int num);
+
 };
-

@@ -15,10 +15,10 @@ KoreanInputter::KoreanInputter(Socket* s) {
 
 void KoreanInputter::GetInput() {
 	char ch;
-	char str2[10000] = {};
+	char str2[PACKET_SIZE-1] = {};
 	int count = 0;
 	while (true) {
-		ch = getch();
+		ch = _getch();
 		if (ch == '\b' && count > 0) {
 			str2[count--] = '\0';
 			Gotoxy(count, 0);
@@ -29,12 +29,12 @@ void KoreanInputter::GetInput() {
 			cout << ch;
 			str2[count++] = ch;
 			if (ch == 13) {
-				socket->SetMsg(str2);
+				char msg[PACKET_SIZE] = "m";
+				memcpy(msg+1, str2, sizeof(str2));
+				socket->SetMsg(msg);
 				socket->SendMessageW();
 				count = 0;
-				for (int i = 0; i < 10000; i++) {
-					str2[i] = '\0';
-				}
+				ZeroMemory(str2, sizeof(str2));
 				system("cls");
 			}
 		}
