@@ -3,10 +3,11 @@
 
 MainScene::MainScene() {
 
-	kInputter = new KoreanInputter();
 
 	socket = new Socket(this);
 	socket->SetMsg("test");
+
+	kInputter = new KoreanInputter(socket);
 
 	player = new ZeroSprite("Texture/%s.png", "sample");
 	PushScene(player);
@@ -22,9 +23,6 @@ void MainScene::Update(float eTime) {
 	socket->Update();
 	player->Update(eTime);
 
-	if (ZeroInputMgr->GetKey(VK_SPACE) == INPUTMGR_KEYDOWN) {
-		socket->SendMessage();
-	}
 
 
 	if (ZeroInputMgr->GetKey('A') == INPUTMGR_KEYON)
