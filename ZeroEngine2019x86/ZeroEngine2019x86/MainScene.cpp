@@ -13,38 +13,36 @@ MainScene::MainScene() {
 
 void MainScene::Update(float eTime) {
 	ZeroIScene::Update(eTime);
-	this->eTime = eTime;
 
 	socket->Update();
 	me->Update(eTime);
 
-	char dir = '\0';
+	bool moved = false;
 
 	// moving myself
-	if (ZeroInputMgr->GetKey('A') == INPUTMGR_KEYON) { // ←
-		me->AddPosX(-moveSpd * eTime);
-		dir = 'l';
+	if (ZeroInputMgr->GetKey('A') == INPUTMGR_KEYON) { 
+		me->AddPosX(-moveSpd * eTime); // ←
+		moved = true;
 	}
-	if (ZeroInputMgr->GetKey('D') == INPUTMGR_KEYON) { // →
-		me->AddPosX(moveSpd * eTime);
-		dir = 'r';
+	if (ZeroInputMgr->GetKey('D') == INPUTMGR_KEYON) {
+		me->AddPosX(moveSpd * eTime); // →
+		moved = true;
 	}
-	if (ZeroInputMgr->GetKey('W') == INPUTMGR_KEYON) { // ↑
-		me->AddPosY(-moveSpd * eTime);
-		dir = 'u';
+	if (ZeroInputMgr->GetKey('W') == INPUTMGR_KEYON) {
+		me->AddPosY(-moveSpd * eTime); // ↑
+		moved = true;
 	}
-	if (ZeroInputMgr->GetKey('S') == INPUTMGR_KEYON) { // ↓
-		me->AddPosY(moveSpd * eTime);
-		dir = 'd';
+	if (ZeroInputMgr->GetKey('S') == INPUTMGR_KEYON) {
+		me->AddPosY(moveSpd * eTime); // ↓
+		moved = true;
 	}
 
-	if (dir != '\0') {
-		char msg[1+sizeof(int)+1+1];
-		sprintf_s(msg, sizeof(msg), "u%d%c", socket->num, dir);
+	if (moved) {
+		char msg[1+sizeof(int)+sizeof(int)+sizeof(int)+1];
+		sprintf_s(msg, sizeof(msg), "u%2d%5d%5d", socket->num, (int)me->Pos().x, (int)me->Pos().y); // <!> id 2자리, 5자리까지 받을 수 있음
 		cout << msg << endl;
 		socket->SetMsg(msg);
 		socket->SendMessage();
-		dir = '\0';
 	}
 }
 
@@ -73,19 +71,14 @@ void MainScene::OnRecieveMessage(char* msg) {
 }
 
 // 서버에서 플레이어 움직임을 받으면 그 플레이어를 움직인다.
-void MainScene::OnUserMove(int num, char dir) {
+void MainScene::OnUserMove(int num, int x, int y) {
 	auto useriter = users.find(num);
 	if (useriter == users.end())
 		return;
 
 	ZeroSprite* user = useriter->second;
-
-	switch (dir) {
-		case 'l': user->AddPosX(-moveSpd * eTime); break;
-		case 'r': user->AddPosX(+moveSpd * eTime); break;
-		case 'u': user->AddPosY(-moveSpd * eTime); break;
-		case 'd': user->AddPosY(+moveSpd * eTime); break;
-	}
+	ZeroVec* vec = new ZeroVec(x, y);
+	user->SetPos(*vec);
 }
 
 // 유저가 들어오면 새 플레이어를 만들고 화면에 띄운다.

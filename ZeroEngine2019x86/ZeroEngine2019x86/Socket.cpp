@@ -72,12 +72,17 @@ void Socket::proc_recv() {
 				
 				// user movement (u(1) + client num(int) + direction(int))
 				case 'u': {
-					char num[sizeof(int)+1];
-					memcpy(&num, &buffer[1], sizeof(int));
-					num[sizeof(int)] = '\0';
-					char dir = buffer[1+sizeof(int)];
+					char num[2 + 1];
+					memcpy(&num, &buffer[1], 2);
+					num[2] = '\0';
+					char x[5 + 1];
+					memcpy(&x, &buffer[1 + 2], 5);
+					x[5] = '\0';
+					char y[5 + 1];
+					memcpy(&y, &buffer[1 + 2 + 5], 5);
+					y[5] = '\0';
 
-					mainScene->OnUserMove(atoi(num), dir);
+					mainScene->OnUserMove(atoi(num), atoi(x), atoi(y));
 					break;
 				}
 				

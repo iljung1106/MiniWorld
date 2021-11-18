@@ -14,8 +14,6 @@ private:
 	map<int, ZeroSprite*> users;
 	list<ZeroFont*> chats;
 
-	float eTime;
-
 	int moveSpd = 200;
 
 	void Update(float eTime);
@@ -25,7 +23,7 @@ public:
 	MainScene();
 
 	void OnRecieveMessage(char* msg);
-	void OnUserMove(int num, char dir);
+	void OnUserMove(int num, int x, int y);
 	void OnUserJoin(int num);
 	void OnUserLeave(int num);
 

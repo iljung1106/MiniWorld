@@ -121,12 +121,17 @@ void recvData(SOCKET s, int num) {
 			// user movement (u(1) + client num(int) + direction(int))
 			case 'u':
 				// 유저 이동
-				char num[sizeof(int)+1];
-				memcpy(&num, &buffer[1], sizeof(int));
-				num[sizeof(int)] = '\0';
-				char dir = buffer[1+sizeof(int)];
+				char num[2+1];
+				memcpy(&num, &buffer[1], 2);
+				num[2] = '\0';
+				char x[5+1];
+				memcpy(&x, &buffer[1+2], 5);
+				x[5] = '\0';
+				char y[5+1];
+				memcpy(&y, &buffer[1+2+5], 5);
+				y[5] = '\0';
 
-				cout << "> Client #" << num << "(이)가 " << dir << "으로 이동 " << endl;
+				cout << "> Client #" << atoi(num) << "(이)가 " << atoi(x) << ", " << atoi(y) << "(으)로 이동 " << endl;
 				for (ClientSocket client : c)
 					send(client.client, buffer, strlen(buffer), 0);
 				break;
