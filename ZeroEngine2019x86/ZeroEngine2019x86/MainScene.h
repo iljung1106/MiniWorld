@@ -11,9 +11,9 @@ public:
 	~MainScene();
 
 	void OnRecieveMessage(char* msg);
-	void OnRecieveMovement(int num, int dir);
-	void OnPlayerJoin(int num);
-	void OnPlayerLeave(int num);
+	void OnUserMove(int num, int dir);
+	void OnUserJoin(int num);
+	void OnUserLeave(int num);
 
 private:
 	void Update(float eTime);
@@ -22,7 +22,8 @@ private:
 	list<ZeroFont*> chats;
 	KoreanInputter* kInputter;
 	Socket* socket;
-	ZeroSprite* player;
+	ZeroSprite* me;
+	list<ZeroSprite*> users;
 
 	int moveSpd = 200;
 };

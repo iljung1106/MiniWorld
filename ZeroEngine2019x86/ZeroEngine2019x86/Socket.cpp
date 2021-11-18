@@ -68,13 +68,13 @@ void Socket::proc_recv() {
 					break;
 				}
 				
-				// player movement (p(1) + client num(int) + direction(int))
-				case 'p': {
+				// user movement (u(1) + client num(int) + direction(int))
+				case 'u': {
 					int num;
 					memcpy(&num, &buffer[1], sizeof(int));
 					int dir;
 					memcpy(&dir, &buffer[1 + sizeof(int)], sizeof(int));
-					mainScene->OnRecieveMovement(num, dir);
+					mainScene->OnUserMove(num, dir);
 					break;
 				}
 				
@@ -82,7 +82,7 @@ void Socket::proc_recv() {
 				case 'j': {
 					int num;
 					memcpy(&num, &buffer[1], sizeof(int));
-					mainScene->OnPlayerJoin(num);
+					mainScene->OnUserJoin(num);
 					break;
 				}
 				
@@ -90,7 +90,7 @@ void Socket::proc_recv() {
 				case 'l': {
 					int num;
 					memcpy(&num, &buffer[1], sizeof(int));
-					mainScene->OnPlayerLeave(num);
+					mainScene->OnUserLeave(num);
 					break;
 				}
 			}

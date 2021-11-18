@@ -2,15 +2,13 @@
 #include "MainScene.h"
 
 MainScene::MainScene() {
-
-
 	socket = new Socket(this);
 	socket->SetMsg("test");
 
 	kInputter = new KoreanInputter(socket);
 
-	player = new ZeroSprite("Texture/%s.png", "sample");
-	PushScene(player);
+	me = new ZeroSprite("Texture/%s.png", "sample");
+	PushScene(me);
 }
 
 MainScene::~MainScene() {
@@ -21,23 +19,23 @@ void MainScene::Update(float eTime) {
 	ZeroIScene::Update(eTime);
 
 	socket->Update();
-	player->Update(eTime);
+	me->Update(eTime);
 
 
 
 	if (ZeroInputMgr->GetKey('A') == INPUTMGR_KEYON)
-		player->AddPosX(-moveSpd * eTime);
+		me->AddPosX(-moveSpd * eTime);
 	if (ZeroInputMgr->GetKey('D') == INPUTMGR_KEYON)
-		player->AddPosX(moveSpd * eTime);
+		me->AddPosX(moveSpd * eTime);
 	if (ZeroInputMgr->GetKey('W') == INPUTMGR_KEYON)
-		player->AddPosY(-moveSpd * eTime);
+		me->AddPosY(-moveSpd * eTime);
 	if (ZeroInputMgr->GetKey('S') == INPUTMGR_KEYON)
-		player->AddPosY(moveSpd * eTime);
+		me->AddPosY(moveSpd * eTime);
 }
 
 void MainScene::Render() {
 	ZeroIScene::Render();
-	player->Render();
+	me->Render();
 	for (ZeroFont* chat : chats)
 		chat->Render();
 }
@@ -57,16 +55,16 @@ void MainScene::OnRecieveMessage(char* msg) {
 }
 
 // 서버에서 플레이어 움직임을 받으면 그 플레이어를 움직인다.
-void MainScene::OnRecieveMovement(int num, int dir) {
+void MainScene::OnUserMove(int num, int dir) {
 
 }
 
-// 서버에서 플레이어가 들어오면 새 플레이어를 만들고 화면에 띄운다.
-void MainScene::OnPlayerJoin(int num) {
-
+// 유저가 들어오면 새 플레이어를 만들고 화면에 띄운다.
+void MainScene::OnUserJoin(int num) {
+	
 }
 
-// 서버에서 플레이어가 들어오면 그 플레이어를 없앤다.
-void MainScene::OnPlayerLeave(int num) {
-
+// 유저가 들어오면 그 플레이어를 없앤다.
+void MainScene::OnUserLeave(int num) {
+	
 }
