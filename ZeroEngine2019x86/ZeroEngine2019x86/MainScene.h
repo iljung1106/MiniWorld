@@ -6,8 +6,8 @@
 #include "Socket.h"
 #include "KoreanInputter.h"
 class MainScene : public ZeroIScene {
-public:
-	MainScene(HINSTANCE hInst);
+public :
+	MainScene();
 	~MainScene();
 
 	void OnRecieveMessage(char* msg);
