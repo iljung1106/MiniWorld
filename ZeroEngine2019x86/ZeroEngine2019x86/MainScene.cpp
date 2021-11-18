@@ -27,19 +27,21 @@ void MainScene::Update(float eTime) {
 	socket->Update();
 	player->Update(eTime);
 
+	testFont->SetString(socket->recievedMsg);
+
 	if (ZeroInputMgr->GetKey(VK_SPACE) == INPUTMGR_KEYDOWN) {
 		socket->SendMessage();
 	}
 
 
 	if (ZeroInputMgr->GetKey('A') == INPUTMGR_KEYON)
-		player->AddPosX(-300 * eTime);
+		player->AddPosX(-moveSpd * eTime);
 	if (ZeroInputMgr->GetKey('D') == INPUTMGR_KEYON)
-		player->AddPosX(300 * eTime);
+		player->AddPosX(moveSpd * eTime);
 	if (ZeroInputMgr->GetKey('W') == INPUTMGR_KEYON)
-		player->AddPosY(-300 * eTime);
+		player->AddPosY(-moveSpd * eTime);
 	if (ZeroInputMgr->GetKey('S') == INPUTMGR_KEYON)
-		player->AddPosY(300 * eTime);
+		player->AddPosY(moveSpd * eTime);
 }
 
 void MainScene::Render() {

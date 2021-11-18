@@ -40,28 +40,22 @@ void Socket::Update() {
 
 	//cout << ((isConnected) ? "connected\n" : "notConnected\n");
 	if (isConnected) {
-
+		
 	}
-	else {
-		//if (!connect(server, (SOCKADDR*)&addr, sizeof(addr))) {}
-	}
-
 }
 
 
 /* 서버한테서 메세지를 받는 스레드 */
 void Socket::proc_recv() {
 	static char buffer[PACKET_SIZE] = {};
-	static string cmd;
+	
 	while (true) {
 		if (isConnected) {
 			ZeroMemory(&buffer, PACKET_SIZE);
 			recv(server, buffer, PACKET_SIZE, 0);
-			cmd = buffer;
-			if (cmd == "/exit") break;
-			//strcat(recievedMsg, buffer);
-			//cout << recievedMsg;
-			cout << cmd << endl;
+			recievedMsg = buffer;
+			if (recievedMsg == "/exit") break;
+			cout << recievedMsg << endl;
 		}
 	}
 }

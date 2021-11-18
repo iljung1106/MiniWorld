@@ -20,7 +20,7 @@ private:
 	thread* p;
 	thread tr;
 public:
-	char* recievedMsg = "";
+	string recievedMsg = "";
 	Socket();
 	~Socket();
 	const char* msg;
