@@ -50,16 +50,51 @@ void Socket::Update() {
 
 /* 서버한테서 메세지를 받는 스레드 */
 void Socket::proc_recv() {
-	static char recievedMsg[PACKET_SIZE] = {};
+	static char buffer[PACKET_SIZE] = {};
 	
 	while (true) {
 		if (isConnected) {
-			ZeroMemory(&recievedMsg, PACKET_SIZE);
-			recv(server, recievedMsg, PACKET_SIZE, 0);
-			if (recievedMsg == "/exit") break;
-			cout << recievedMsg << endl;
+			ZeroMemory(&buffer, PACKET_SIZE);
+			recv(server, buffer, PACKET_SIZE, 0);
 
-			mainScene->OnRecieveMessage(recievedMsg);
+			switch (buffer[0]) {
+
+				// message (m(1) + msg(1023))
+				case 'm': {
+					char recievedMsg[PACKET_SIZE - 1];
+					memcpy(recievedMsg, &buffer[1], PACKET_SIZE - 1);
+					cout << recievedMsg << endl;
+					mainScene->OnRecieveMessage(recievedMsg);
+					break;
+				}
+				
+				// player movement (p(1) + client num(int) + direction(int))
+				case 'p': {
+					int num;
+					memcpy(&num, &buffer[1], sizeof(int));
+					int dir;
+					memcpy(&dir, &buffer[1 + sizeof(int)], sizeof(int));
+					mainScene->OnRecieveMovement(num, dir);
+					break;
+				}
+				
+				// join (j(1) + client num(int))
+				case 'j': {
+					int num;
+					memcpy(&num, &buffer[1], sizeof(int));
+					mainScene->OnPlayerJoin(num);
+					break;
+				}
+				
+				// leave (l(1) + client num(int))
+				case 'l': {
+					int num;
+					memcpy(&num, &buffer[1], sizeof(int));
+					mainScene->OnPlayerLeave(num);
+					break;
+				}
+			}
+
 		}
 	}
 }

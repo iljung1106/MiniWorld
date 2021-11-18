@@ -64,7 +64,7 @@ void acceptingClients() {
 		cout << "> Client #" << num << " joined" << endl;
 
 		char send_msg[PACKET_SIZE];
-		sprintf_s(send_msg, "[#] Client #%d(이)가 입장했습니다.", num);
+		sprintf_s(send_msg, "j[#] Client #%d(이)가 입장했습니다.", num);
 		for (ClientSocket client : c)
 			send(client.client, send_msg, strlen(send_msg), 0);
 
@@ -92,7 +92,7 @@ void recvData(SOCKET s, int num) {
 
 		// 메세지
 		cout << "> [Client #" << num << "] " << msg << endl;
-		sprintf_s(send_msg, "<Client #%d> %s", num, msg);
+		sprintf_s(send_msg, "m<Client #%d> %s", num, msg);
 		for (ClientSocket client : c)
 			send(client.client, send_msg, strlen(send_msg), 0);
 	}
