@@ -63,34 +63,41 @@ void Socket::proc_recv() {
 				case 'm': {
 					char recievedMsg[PACKET_SIZE - 1];
 					memcpy(recievedMsg, &buffer[1], PACKET_SIZE - 1);
-					//cout << recievedMsg << endl;
+
 					mainScene->OnRecieveMessage(recievedMsg);
 					break;
 				}
 				
 				// user movement (u(1) + client num(int) + direction(int))
 				case 'u': {
-					int num;
+					char num[sizeof(int)+1];
 					memcpy(&num, &buffer[1], sizeof(int));
-					int dir;
+					num[sizeof(int)] = '\0';
+					char dir[sizeof(int)+1];
 					memcpy(&dir, &buffer[1 + sizeof(int)], sizeof(int));
-					mainScene->OnUserMove(num, dir);
+					dir[sizeof(int)] = '\0';
+
+					mainScene->OnUserMove(atoi(num), atoi(dir));
 					break;
 				}
 				
 				// join (j(1) + client num(int))
 				case 'j': {
-					int num;
+					char num[sizeof(int)+1];
 					memcpy(&num, &buffer[1], sizeof(int));
-					mainScene->OnUserJoin(num);
+					num[sizeof(int)] = '\0';
+
+					mainScene->OnUserJoin(atoi(num));
 					break;
 				}
 				
 				// leave (l(1) + client num(int))
 				case 'l': {
-					int num;
+					char num[sizeof(int)+1];
 					memcpy(&num, &buffer[1], sizeof(int));
-					mainScene->OnUserLeave(num);
+					num[sizeof(int)] = '\0';
+
+					mainScene->OnUserLeave(atoi(num));
 					break;
 				}
 			}
