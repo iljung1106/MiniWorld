@@ -7,7 +7,7 @@
 #include "KoreanInputter.h"
 class MainScene : public ZeroIScene {
 public:
-	MainScene(HINSTANCE hInst);
+	MainScene();
 	~MainScene();
 
 	void OnRecieveMessage(char* msg);
