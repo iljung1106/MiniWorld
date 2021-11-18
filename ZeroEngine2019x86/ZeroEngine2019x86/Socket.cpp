@@ -1,7 +1,10 @@
 #include "stdafx.h"
 #include "Socket.h"
+#include "MainScene.h"
 
-Socket::Socket() {
+Socket::Socket(MainScene* mainScene) {
+	this->mainScene = mainScene;
+
 	WSADATA wsa;
 	if (WSAStartup(MAKEWORD(2, 2), &wsa)) {
 		cout << "WSA error";
@@ -47,15 +50,16 @@ void Socket::Update() {
 
 /* 서버한테서 메세지를 받는 스레드 */
 void Socket::proc_recv() {
-	static char buffer[PACKET_SIZE] = {};
+	static char recievedMsg[PACKET_SIZE] = {};
 	
 	while (true) {
 		if (isConnected) {
-			ZeroMemory(&buffer, PACKET_SIZE);
-			recv(server, buffer, PACKET_SIZE, 0);
-			recievedMsg = buffer;
+			ZeroMemory(&recievedMsg, PACKET_SIZE);
+			recv(server, recievedMsg, PACKET_SIZE, 0);
 			if (recievedMsg == "/exit") break;
 			cout << recievedMsg << endl;
+
+			mainScene->OnRecieveMessage(recievedMsg);
 		}
 	}
 }

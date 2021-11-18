@@ -2,15 +2,10 @@
 #include "MainScene.h"
 
 MainScene::MainScene(HINSTANCE hInst) {
-	char* text = "test";
-	testFont = new ZeroFont(30, text, (char*)"나눔고딕");
-	testFont->SetColor(0xffff0000);
-	testFont->SetPos(0, 100);
-	PushScene(testFont);
 
 	kInputter = new KoreanInputter(hInst);
 
-	socket = new Socket();
+	socket = new Socket(this);
 	socket->SetMsg("test");
 
 	player = new ZeroSprite("Texture/%s.png", "sample");
@@ -26,8 +21,6 @@ void MainScene::Update(float eTime) {
 
 	socket->Update();
 	player->Update(eTime);
-
-	testFont->SetString(socket->recievedMsg);
 
 	if (ZeroInputMgr->GetKey(VK_SPACE) == INPUTMGR_KEYDOWN) {
 		socket->SendMessage();
@@ -47,5 +40,20 @@ void MainScene::Update(float eTime) {
 void MainScene::Render() {
 	ZeroIScene::Render();
 	player->Render();
-	testFont->Render();
+	for (ZeroFont* chat : chats)
+		chat->Render();
+}
+
+// Socket.cpp | 서버에서 메세지를 받았을 때 호출됨
+// 새로운 채팅 텍스트를 띄운다.
+void MainScene::OnRecieveMessage(char* msg) {
+	ZeroFont* testFont = new ZeroFont(30, msg, (char*)"나눔고딕");
+	testFont->SetColor(0xffff0000);
+	testFont->SetPos(300, 400);
+	PushScene(testFont);
+
+	for (ZeroFont* chat : chats)
+		chat->AddPosY(-30);
+	chats.push_back(testFont);
+
 }

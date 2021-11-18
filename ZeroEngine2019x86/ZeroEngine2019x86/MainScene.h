@@ -9,11 +9,12 @@ class MainScene : public ZeroIScene {
 public :
 	MainScene(HINSTANCE hInst);
 	~MainScene();
+	void OnRecieveMessage(char* msg);
 private :
 	void Update(float eTime);
 	void Render();
 
-	ZeroFont* testFont;
+	list<ZeroFont*> chats;
 	KoreanInputter* kInputter;
 	Socket* socket;
 	ZeroSprite* player;

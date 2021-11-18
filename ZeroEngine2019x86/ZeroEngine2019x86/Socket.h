@@ -10,6 +10,8 @@ using namespace std;
 
 #define PACKET_SIZE 1024
 
+class MainScene;
+
 class Socket {
 private:
 	void proc_recv();
@@ -20,10 +22,11 @@ private:
 	thread* p;
 	thread tr;
 public:
-	string recievedMsg = "";
-	Socket();
+	Socket(MainScene* mainScene);
 	~Socket();
 	const char* msg;
+	MainScene* mainScene;
+
 	void Update();
 	void SendMessage();
 	void SetMsg(const char* t);
