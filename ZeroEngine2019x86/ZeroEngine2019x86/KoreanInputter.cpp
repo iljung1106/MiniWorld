@@ -19,15 +19,29 @@ void KoreanInputter::GetInput() {
 	int count = 0;
 	while (true) {
 		ch = getch();
-		cout << ch;
-		str2[count++] = ch;
-		if (ch == 13) {
-			socket->SetMsg(str2);
-			socket->SendMessageW();
-			count = 0;
-			for (int i = 0; i < 10000; i++) {
-				str2[i] = '\0';
+		if (ch == '\b' && count > 0) {
+			str2[count--] = '\0';
+			Gotoxy(count, 0);
+			cout << " ";
+			Gotoxy(count, 0);
+		}
+		else {
+			cout << ch;
+			str2[count++] = ch;
+			if (ch == 13) {
+				socket->SetMsg(str2);
+				socket->SendMessageW();
+				count = 0;
+				for (int i = 0; i < 10000; i++) {
+					str2[i] = '\0';
+				}
+				system("cls");
 			}
 		}
 	}
+}
+
+void KoreanInputter::Gotoxy(int x, int y) {
+	COORD pos = { x,y }; //x, y 좌표 설정
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos); //커서 설정
 }

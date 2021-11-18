@@ -63,7 +63,7 @@ void Socket::proc_recv() {
 				case 'm': {
 					char recievedMsg[PACKET_SIZE - 1];
 					memcpy(recievedMsg, &buffer[1], PACKET_SIZE - 1);
-					cout << recievedMsg << endl;
+					//cout << recievedMsg << endl;
 					mainScene->OnRecieveMessage(recievedMsg);
 					break;
 				}

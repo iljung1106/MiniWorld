@@ -17,5 +17,6 @@ public:
 	char* GetText();
 	void Update(float eTime);
 	void GetInput();
+	void Gotoxy(int x, int y);
 	KoreanInputter(Socket* s);
 };
