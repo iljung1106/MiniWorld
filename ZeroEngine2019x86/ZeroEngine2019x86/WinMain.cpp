@@ -9,8 +9,8 @@ ZeroConsole g_Console;
 
 INT WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, INT)
 {
-	int WindowWidth = 1280;
-	int WindowHeight = 720;
+	int WindowWidth = 900;
+	int WindowHeight = 500;
 
 	ZeroApp->RegisterWindowSize(WindowWidth, WindowHeight);
 	WNDCLASSEX wc = { sizeof(WNDCLASSEX), CS_CLASSDC, ZeroApp->MsgProc, 0L, 0L,
@@ -35,7 +35,7 @@ INT WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, INT)
 		UpdateWindow(hWnd);
 
 		//여기서 처음 시작하는 Scene을 정한다
-		ZeroSceneMgr->ChangeScene(new MainScene(hInst));
+		ZeroSceneMgr->ChangeScene(new MainScene());
 
 
 		MSG msg;

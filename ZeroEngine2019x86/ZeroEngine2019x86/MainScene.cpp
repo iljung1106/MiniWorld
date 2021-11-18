@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "MainScene.h"
 
-MainScene::MainScene(HINSTANCE hInst) {
+MainScene::MainScene() {
 
-	kInputter = new KoreanInputter(hInst);
+	kInputter = new KoreanInputter();
 
 	socket = new Socket(this);
 	socket->SetMsg("test");
