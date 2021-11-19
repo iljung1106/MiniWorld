@@ -21,11 +21,28 @@ Socket::Socket(MainScene* mainScene, char* addrs) {
 		return;
 	}
 
-	SOCKADDR_IN addr = {0,};
+	// 주소 파일 열기
+	FILE* f;
+	fopen_s(&f, "addr.txt", "r");
+	if (f == nullptr) {
+		cout << "addr.txt 파일이 존재하지 않습니다." << endl;
+		Sleep(2000);
+		exit(-1);
+	}
+	char ip[20];
+	int i;
+	for (i = 0;; i++) {
+		ip[i] = fgetc(f);
+		if (ip[i] == EOF)
+			break;
+	}
+	ip[i] = '\0';
+	fclose(f);
+
+	SOCKADDR_IN addr = { 0, };
 	addr.sin_family = AF_INET;
 	addr.sin_port = htons(4444); // 포트
-	//addr.sin_addr.s_addr = inet_addr("211.204.30.40"); // 주소
-	addr.sin_addr.s_addr = inet_addr(address); // 주소
+	addr.sin_addr.s_addr = inet_addr(ip); // 주소
 
 	while (connect(server, (SOCKADDR*)&addr, sizeof(addr)));
 	isConnected = true;
