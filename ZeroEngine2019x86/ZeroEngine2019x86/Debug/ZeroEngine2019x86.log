@@ -1,0 +1,47 @@
+﻿  stdafx.cpp
+  KoreanInputter.cpp
+D:\ZeroProjects\MiniWorld\ZeroEngine2019x86\ZeroEngine2019x86\KoreanInputter.cpp(45,16): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+D:\ZeroProjects\MiniWorld\ZeroEngine2019x86\ZeroEngine2019x86\KoreanInputter.cpp(45,18): warning C4838: 'int'에서 'SHORT'(으)로의 변환에는 축소 변환이 필요합니다.
+  MainScene.cpp
+  Socket.cpp
+D:\ZeroProjects\MiniWorld\ZeroEngine2019x86\ZeroEngine2019x86\Socket.cpp(7,2): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  WinMain.cpp
+  코드를 생성하고 있습니다...
+ZeroEngine-Debug.lib(stdafx.obj) : warning LNK4099: 'ZeroEngine.pdb' PDB를 'ZeroEngine-Debug.lib(stdafx.obj)' 또는 'D:\ZeroProjects\MiniWorld\ZeroEngine2019x86\Debug\ZeroEngine.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+ZeroEngine-Debug.lib(ZeroApplication.obj) : warning LNK4099: 'ZeroEngine.pdb' PDB를 'ZeroEngine-Debug.lib(ZeroApplication.obj)' 또는 'D:\ZeroProjects\MiniWorld\ZeroEngine2019x86\Debug\ZeroEngine.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+ZeroEngine-Debug.lib(ZeroCameraManager.obj) : warning LNK4099: '' PDB를 'ZeroEngine-Debug.lib(ZeroCameraManager.obj)' 또는 ''에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+ZeroEngine-Debug.lib(ZeroConsole.obj) : warning LNK4099: 'ZeroEngine.pdb' PDB를 'ZeroEngine-Debug.lib(ZeroConsole.obj)' 또는 'D:\ZeroProjects\MiniWorld\ZeroEngine2019x86\Debug\ZeroEngine.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+ZeroEngine-Debug.lib(ZeroFont.obj) : warning LNK4099: 'ZeroEngine.pdb' PDB를 'ZeroEngine-Debug.lib(ZeroFont.obj)' 또는 'D:\ZeroProjects\MiniWorld\ZeroEngine2019x86\Debug\ZeroEngine.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+ZeroEngine-Debug.lib(ZeroInputManager.obj) : warning LNK4099: 'ZeroEngine.pdb' PDB를 'ZeroEngine-Debug.lib(ZeroInputManager.obj)' 또는 'D:\ZeroProjects\MiniWorld\ZeroEngine2019x86\Debug\ZeroEngine.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+ZeroEngine-Debug.lib(ZeroIScene.obj) : warning LNK4099: '' PDB를 'ZeroEngine-Debug.lib(ZeroIScene.obj)' 또는 ''에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+ZeroEngine-Debug.lib(ZeroIShader.obj) : warning LNK4099: 'ZeroEngine.pdb' PDB를 'ZeroEngine-Debug.lib(ZeroIShader.obj)' 또는 'D:\ZeroProjects\MiniWorld\ZeroEngine2019x86\Debug\ZeroEngine.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+ZeroEngine-Debug.lib(ZeroMathManager.obj) : warning LNK4099: 'ZeroEngine.pdb' PDB를 'ZeroEngine-Debug.lib(ZeroMathManager.obj)' 또는 'D:\ZeroProjects\MiniWorld\ZeroEngine2019x86\Debug\ZeroEngine.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+ZeroEngine-Debug.lib(ZeroProcessMonitor.obj) : warning LNK4099: 'ZeroEngine.pdb' PDB를 'ZeroEngine-Debug.lib(ZeroProcessMonitor.obj)' 또는 'D:\ZeroProjects\MiniWorld\ZeroEngine2019x86\Debug\ZeroEngine.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+ZeroEngine-Debug.lib(ZeroRenderTarget.obj) : warning LNK4099: 'ZeroEngine.pdb' PDB를 'ZeroEngine-Debug.lib(ZeroRenderTarget.obj)' 또는 'D:\ZeroProjects\MiniWorld\ZeroEngine2019x86\Debug\ZeroEngine.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+ZeroEngine-Debug.lib(ZeroRenderTargetManager.obj) : warning LNK4099: 'ZeroEngine.pdb' PDB를 'ZeroEngine-Debug.lib(ZeroRenderTargetManager.obj)' 또는 'D:\ZeroProjects\MiniWorld\ZeroEngine2019x86\Debug\ZeroEngine.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+ZeroEngine-Debug.lib(ZeroResource.obj) : warning LNK4099: 'ZeroEngine.pdb' PDB를 'ZeroEngine-Debug.lib(ZeroResource.obj)' 또는 'D:\ZeroProjects\MiniWorld\ZeroEngine2019x86\Debug\ZeroEngine.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+ZeroEngine-Debug.lib(ZeroResourceManager.obj) : warning LNK4099: '' PDB를 'ZeroEngine-Debug.lib(ZeroResourceManager.obj)' 또는 ''에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+ZeroEngine-Debug.lib(ZeroSceneManager.obj) : warning LNK4099: 'ZeroEngine.pdb' PDB를 'ZeroEngine-Debug.lib(ZeroSceneManager.obj)' 또는 'D:\ZeroProjects\MiniWorld\ZeroEngine2019x86\Debug\ZeroEngine.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+ZeroEngine-Debug.lib(ZeroShaderManager.obj) : warning LNK4099: '' PDB를 'ZeroEngine-Debug.lib(ZeroShaderManager.obj)' 또는 ''에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+ZeroEngine-Debug.lib(ZeroSoundManager.obj) : warning LNK4099: '' PDB를 'ZeroEngine-Debug.lib(ZeroSoundManager.obj)' 또는 ''에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+ZeroEngine-Debug.lib(ZeroSprite.obj) : warning LNK4099: 'ZeroEngine.pdb' PDB를 'ZeroEngine-Debug.lib(ZeroSprite.obj)' 또는 'D:\ZeroProjects\MiniWorld\ZeroEngine2019x86\Debug\ZeroEngine.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+ZeroEngine-Debug.lib(ZeroSpriteManager.obj) : warning LNK4099: 'ZeroEngine.pdb' PDB를 'ZeroEngine-Debug.lib(ZeroSpriteManager.obj)' 또는 'D:\ZeroProjects\MiniWorld\ZeroEngine2019x86\Debug\ZeroEngine.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+ZeroEngine-Debug.lib(ZeroTextureManager.obj) : warning LNK4099: 'ZeroEngine.pdb' PDB를 'ZeroEngine-Debug.lib(ZeroTextureManager.obj)' 또는 'D:\ZeroProjects\MiniWorld\ZeroEngine2019x86\Debug\ZeroEngine.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+ZeroEngine-Debug.lib(ZeroTrBandedSwirl.obj) : warning LNK4099: 'ZeroEngine.pdb' PDB를 'ZeroEngine-Debug.lib(ZeroTrBandedSwirl.obj)' 또는 'D:\ZeroProjects\MiniWorld\ZeroEngine2019x86\Debug\ZeroEngine.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+ZeroEngine-Debug.lib(ZeroTrCircleReveal.obj) : warning LNK4099: '' PDB를 'ZeroEngine-Debug.lib(ZeroTrCircleReveal.obj)' 또는 ''에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+ZeroEngine-Debug.lib(ZeroTrCircleStretch.obj) : warning LNK4099: '' PDB를 'ZeroEngine-Debug.lib(ZeroTrCircleStretch.obj)' 또는 ''에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+ZeroEngine-Debug.lib(ZeroTrCloudReveal.obj) : warning LNK4099: 'ZeroEngine.pdb' PDB를 'ZeroEngine-Debug.lib(ZeroTrCloudReveal.obj)' 또는 'D:\ZeroProjects\MiniWorld\ZeroEngine2019x86\Debug\ZeroEngine.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+ZeroEngine-Debug.lib(ZeroTrCrumble.obj) : warning LNK4099: '' PDB를 'ZeroEngine-Debug.lib(ZeroTrCrumble.obj)' 또는 ''에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+ZeroEngine-Debug.lib(ZeroTrDropFade.obj) : warning LNK4099: '' PDB를 'ZeroEngine-Debug.lib(ZeroTrDropFade.obj)' 또는 ''에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+ZeroEngine-Debug.lib(ZeroTrFade.obj) : warning LNK4099: 'ZeroEngine.pdb' PDB를 'ZeroEngine-Debug.lib(ZeroTrFade.obj)' 또는 'D:\ZeroProjects\MiniWorld\ZeroEngine2019x86\Debug\ZeroEngine.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+ZeroEngine-Debug.lib(ZeroTrPixelate.obj) : warning LNK4099: '' PDB를 'ZeroEngine-Debug.lib(ZeroTrPixelate.obj)' 또는 ''에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+ZeroEngine-Debug.lib(ZeroTrRadialBlur.obj) : warning LNK4099: '' PDB를 'ZeroEngine-Debug.lib(ZeroTrRadialBlur.obj)' 또는 ''에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+ZeroEngine-Debug.lib(ZeroTrRadialWiggle.obj) : warning LNK4099: 'ZeroEngine.pdb' PDB를 'ZeroEngine-Debug.lib(ZeroTrRadialWiggle.obj)' 또는 'D:\ZeroProjects\MiniWorld\ZeroEngine2019x86\Debug\ZeroEngine.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+ZeroEngine-Debug.lib(ZeroTrRandomCircleReveal.obj) : warning LNK4099: '' PDB를 'ZeroEngine-Debug.lib(ZeroTrRandomCircleReveal.obj)' 또는 ''에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+ZeroEngine-Debug.lib(ZeroTrRipple.obj) : warning LNK4099: 'ZeroEngine.pdb' PDB를 'ZeroEngine-Debug.lib(ZeroTrRipple.obj)' 또는 'D:\ZeroProjects\MiniWorld\ZeroEngine2019x86\Debug\ZeroEngine.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+ZeroEngine-Debug.lib(ZeroTrRotateCrumble.obj) : warning LNK4099: 'ZeroEngine.pdb' PDB를 'ZeroEngine-Debug.lib(ZeroTrRotateCrumble.obj)' 또는 'D:\ZeroProjects\MiniWorld\ZeroEngine2019x86\Debug\ZeroEngine.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+ZeroEngine-Debug.lib(ZeroTrSaturate.obj) : warning LNK4099: 'ZeroEngine.pdb' PDB를 'ZeroEngine-Debug.lib(ZeroTrSaturate.obj)' 또는 'D:\ZeroProjects\MiniWorld\ZeroEngine2019x86\Debug\ZeroEngine.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+ZeroEngine-Debug.lib(ZeroTrSlideIn.obj) : warning LNK4099: 'ZeroEngine.pdb' PDB를 'ZeroEngine-Debug.lib(ZeroTrSlideIn.obj)' 또는 'D:\ZeroProjects\MiniWorld\ZeroEngine2019x86\Debug\ZeroEngine.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+ZeroEngine-Debug.lib(ZeroTrSmoothSwirlGrid.obj) : warning LNK4099: 'ZeroEngine.pdb' PDB를 'ZeroEngine-Debug.lib(ZeroTrSmoothSwirlGrid.obj)' 또는 'D:\ZeroProjects\MiniWorld\ZeroEngine2019x86\Debug\ZeroEngine.pdb'에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+ZeroEngine-Debug.lib(ZeroVec.obj) : warning LNK4099: '' PDB를 'ZeroEngine-Debug.lib(ZeroVec.obj)' 또는 ''에서 찾을 수 없습니다. 디버그 정보가 없는 것처럼 개체를 링크합니다.
+  ZeroEngine2019x86.vcxproj -> D:\ZeroProjects\MiniWorld\ZeroEngine2019x86\Debug\ZeroEngine2019x86.exe
