@@ -26,10 +26,27 @@ void openSocket() {
 		return;
 	}
 
+	// 주소 파일 열기
+	FILE* f;
+	fopen_s(&f, "addr.txt", "r");
+	if (f == nullptr) {
+		cout << "addr.txt 파일이 존재하지 않습니다." << endl;
+		exit(0);
+	}
+	char ip[20];
+	int i;
+	for (i = 0;; i++) {
+		ip[i] = fgetc(f);
+		if (ip[i] == EOF)
+			break;
+	}
+	ip[i] = '\0';
+	fclose(f);
+
 	SOCKADDR_IN addr = { 0 };
 	addr.sin_family = AF_INET;
 	addr.sin_port = htons(4444); // 포트
-	addr.sin_addr.s_addr = htonl(INADDR_ANY); // 주소
+	addr.sin_addr.s_addr = inet_addr(ip); // 주소
 
 	if (bind(server, (SOCKADDR*)&addr, sizeof(addr))) {
 		cout << "bind error";
@@ -44,7 +61,7 @@ void openSocket() {
 		return;
 	}
 
-	cout << "> Socket opened" << endl;
+	cout << "> Socket opened at " << ip << endl;
 }
 
 /* 클라이언트 접속을 받는 스레드 */
