@@ -92,3 +92,11 @@ void MainScene::OnUserJoin(int num) {
 void MainScene::OnUserLeave(int num) {
 	users.erase(num);
 }
+
+// 클라이언트에 처음 접속하면 현재 서버에 있는 유저들의 위치를 받는다.
+void MainScene::OnInit(vector<tuple<int, int, int>> currentUsers) {
+	for (tuple<int, int, int> user : currentUsers) {
+		OnUserJoin(get<0>(user));
+		OnUserMove(get<0>(user), get<1>(user), get<2>(user));
+	}
+}

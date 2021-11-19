@@ -65,12 +65,35 @@ void acceptingClients() {
 		
 		cout << "> Client #" << num << " joined" << endl;
 		char join_msg[PACKET_SIZE];
-		sprintf_s(join_msg, "j%d", num); // 입장(j) 프로토콜
+		ZeroMemory(join_msg, sizeof(join_msg));
+		sprintf_s(join_msg, "j%2d", num); // 입장(j) 프로토콜
 		char send_msg[PACKET_SIZE];
+		ZeroMemory(join_msg, sizeof(join_msg));
 		sprintf_s(send_msg, "m[#] Client #%d joined", num); // 메세지(m) 프로토콜
 
 		for (ClientSocket client : c) {
-			send(client.client, join_msg, (int)strlen(join_msg), 0);
+
+			if (client.number == num) { // 지금 들어온 클라이언트한테는 초기화 메세지를 보냄
+				char init_msg[PACKET_SIZE];
+				ZeroMemory(init_msg, sizeof(init_msg));
+				sprintf_s(init_msg, "i%2d%2d", num, (int)c.size()-1); // 초기화(i) 프로토콜
+
+				for (int i = 0; i < c.size(); i++) {
+					if (c[i].number == num) continue; // 자기 자신 제외
+
+					char clientPos[2+5+5+1];
+					sprintf_s(clientPos, "%2d%5d%5d", c[i].number, c[i].x, c[i].y);
+					memcpy(&init_msg[strlen(init_msg)], clientPos, sizeof(clientPos));
+				}
+
+				init_msg[150] = '\0';
+				cout << init_msg << endl;
+
+				send(client.client, init_msg, (int)strlen(init_msg), 0);
+
+			}
+
+			else send(client.client, join_msg, (int)strlen(join_msg), 0);
 			send(client.client, send_msg, (int)strlen(send_msg), 0);
 		}
 
@@ -92,7 +115,7 @@ void recvData(SOCKET s, int num) {
 
 			cout << "> Client #" << num << " left" << endl;
 			char leave_msg[PACKET_SIZE];
-			sprintf_s(leave_msg, "l%d", num); // 퇴장(l) 프로토콜
+			sprintf_s(leave_msg, "l%2d", num); // 퇴장(l) 프로토콜
 			char send_msg[PACKET_SIZE];
 			sprintf_s(send_msg, "m[#] Client #%d left", num); // 메세지(m) 프로토콜
 
@@ -121,12 +144,19 @@ void recvData(SOCKET s, int num) {
 			// user movement (u(1) + client num(2) + pos.x(5) + pos.y(5))
 			case 'u':
 				// 유저 이동
-				char num[2];
-				memcpy(&num, &buffer[1], 2);
-				char x[5];
-				memcpy(&x, &buffer[1+2], 5);
-				char y[5];
-				memcpy(&y, &buffer[1+2+5], 5);
+				char num[2+1];
+				memcpy(&num, &buffer[1], 2); num[2] = '\0';
+				char x[5+1];
+				memcpy(&x, &buffer[1+2], 5); x[5] = '\0';
+				char y[5+1];
+				memcpy(&y, &buffer[1+2+5], 5); y[5] = '\0';
+
+				for (int i = 0; i < c.size(); i++) {
+					if (c[i].number == atoi(num)) {
+						c[i].x = atoi(x);
+						c[i].y = atoi(y);
+					}
+				}
 
 				for (ClientSocket client : c)
 					send(client.client, buffer, (int)strlen(buffer), 0);

@@ -26,5 +26,5 @@ public:
 	void OnUserMove(int num, int x, int y);
 	void OnUserJoin(int num);
 	void OnUserLeave(int num);
-
+	void OnInit(vector<tuple<int, int, int>> currentUsers);
 };

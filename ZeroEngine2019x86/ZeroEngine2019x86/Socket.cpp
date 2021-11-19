@@ -88,10 +88,7 @@ void Socket::proc_recv() {
 					char num[2];
 					memcpy(&num, &buffer[1], 2);
 
-					if (Socket::num == -1)
-						Socket::num = atoi(num);
-					else
-						mainScene->OnUserJoin(atoi(num));
+					mainScene->OnUserJoin(atoi(num));
 					break;
 				}
 				
@@ -101,6 +98,33 @@ void Socket::proc_recv() {
 					memcpy(&num, &buffer[1], 2);
 
 					mainScene->OnUserLeave(atoi(num));
+					break;
+				}
+				
+				// init (i(1) + my num(2) + user count(2) + [(user num(2) + user.x(5) + user.y(5)), ... ]
+				case 'i': {
+					char num[2];
+					memcpy(&num, &buffer[1], 2);
+					this->num = atoi(num);
+
+					char usercount[2];
+					memcpy(&usercount, &buffer[1+2], 2);
+
+					vector<tuple<int, int, int>> users;
+					for (int i = 0; i < atoi(usercount); i++) {
+
+						char usernum[2];
+						memcpy(&usernum, &buffer[1+2+2 + i*12], 2);
+						char x[5];
+						memcpy(&x, &buffer[1+2+2+2 + i*12], 5);
+						char y[5];
+						memcpy(&y, &buffer[1+2+2+2+5 + i*12], 5);
+
+						tuple<int, int, int> user = make_tuple<int, int, int>(atoi(usernum), atoi(x), atoi(y));
+						users.push_back(user);
+					}
+
+					mainScene->OnInit(users);
 					break;
 				}
 			}

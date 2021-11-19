@@ -20,6 +20,7 @@ public:
 	SOCKADDR_IN client_info = { 0, };
 	int client_size = sizeof(client_info);
 	int number;
+	int x = 0, y = 0;
 
 	ClientSocket() {
 		client = { 0, };
