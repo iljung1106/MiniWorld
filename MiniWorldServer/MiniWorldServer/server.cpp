@@ -68,8 +68,10 @@ void acceptingClients() {
 		ZeroMemory(join_msg, sizeof(join_msg));
 		sprintf_s(join_msg, "j%2d", num); // 입장(j) 프로토콜
 		char send_msg[PACKET_SIZE];
-		ZeroMemory(join_msg, sizeof(join_msg));
+		ZeroMemory(send_msg, sizeof(send_msg));
 		sprintf_s(send_msg, "m[#] Client #%d joined", num); // 메세지(m) 프로토콜
+		
+		cout << join_msg << endl;
 
 		for (ClientSocket client : c) {
 
@@ -77,7 +79,10 @@ void acceptingClients() {
 				char init_msg[PACKET_SIZE];
 				ZeroMemory(init_msg, sizeof(init_msg));
 				int csize = 0;
-				for (ClientSocket client : c) if (client.connected) csize++;
+				for (ClientSocket cl : c) {
+					cout << cl.number << endl;
+					if (cl.connected) { csize++; cout << "++ " << endl; }
+				}
 				sprintf_s(init_msg, "i%2d%2d", num, (int)csize-1); // 초기화(i) 프로토콜
 
 				for (int i = 0; i < c.size(); i++) {
@@ -116,17 +121,20 @@ void recvData(SOCKET s, int num) {
 
 			cout << "> Client #" << num << " left" << endl;
 			char leave_msg[PACKET_SIZE];
+			ZeroMemory(leave_msg, sizeof(leave_msg));
 			sprintf_s(leave_msg, "l%2d", num); // 퇴장(l) 프로토콜
 			char send_msg[PACKET_SIZE];
+			ZeroMemory(send_msg, sizeof(send_msg));
 			sprintf_s(send_msg, "m[#] Client #%d left", num); // 메세지(m) 프로토콜
 
-			for (ClientSocket client : c) {
-				if (client.number == num) {
-					client.connected = false;
+			for (auto client = c.begin(); client != c.end(); client++) {
+				if (client->number == num) {
+					client->connected = false;
+					cout << num << " disconnected" << endl;
 					continue;
 				}
-				send(client.client, leave_msg, (int)strlen(leave_msg), 0);
-				send(client.client, send_msg, (int)strlen(send_msg), 0);
+				send(client->client, leave_msg, (int)strlen(leave_msg), 0);
+				send(client->client, send_msg, (int)strlen(send_msg), 0);
 			}
 			return;
 		}
