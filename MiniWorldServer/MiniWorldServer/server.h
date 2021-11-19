@@ -21,6 +21,7 @@ public:
 	int client_size = sizeof(client_info);
 	int number;
 	int x = 0, y = 0;
+	bool connected = true;
 
 	ClientSocket() {
 		client = { 0, };

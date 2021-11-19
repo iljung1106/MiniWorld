@@ -76,21 +76,22 @@ void acceptingClients() {
 			if (client.number == num) { // 지금 들어온 클라이언트한테는 초기화 메세지를 보냄
 				char init_msg[PACKET_SIZE];
 				ZeroMemory(init_msg, sizeof(init_msg));
-				sprintf_s(init_msg, "i%2d%2d", num, (int)c.size()-1); // 초기화(i) 프로토콜
+				int csize = 0;
+				for (ClientSocket client : c) if (client.connected) csize++;
+				sprintf_s(init_msg, "i%2d%2d", num, (int)csize-1); // 초기화(i) 프로토콜
 
 				for (int i = 0; i < c.size(); i++) {
 					if (c[i].number == num) continue; // 자기 자신 제외
+					if (!c[i].connected) continue; // 연결이 끊긴 소켓 제외
 
 					char clientPos[2+5+5+1];
 					sprintf_s(clientPos, "%2d%5d%5d", c[i].number, c[i].x, c[i].y);
 					memcpy(&init_msg[strlen(init_msg)], clientPos, sizeof(clientPos));
 				}
 
-				init_msg[150] = '\0';
 				cout << init_msg << endl;
 
 				send(client.client, init_msg, (int)strlen(init_msg), 0);
-
 			}
 
 			else send(client.client, join_msg, (int)strlen(join_msg), 0);
@@ -120,12 +121,15 @@ void recvData(SOCKET s, int num) {
 			sprintf_s(send_msg, "m[#] Client #%d left", num); // 메세지(m) 프로토콜
 
 			for (ClientSocket client : c) {
+				if (client.number == num) {
+					client.connected = false;
+					continue;
+				}
 				send(client.client, leave_msg, (int)strlen(leave_msg), 0);
 				send(client.client, send_msg, (int)strlen(send_msg), 0);
 			}
 			return;
 		}
-
 
 		switch (buffer[0]) {
 
