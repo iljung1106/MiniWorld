@@ -38,9 +38,9 @@ void MainScene::Update(float eTime) {
 	}
 
 	if (moved) {
-		char msg[1+sizeof(int)+sizeof(int)+sizeof(int)+1];
-		sprintf_s(msg, sizeof(msg), "u%2d%5d%5d", socket->num, (int)me->Pos().x, (int)me->Pos().y); // <!> id 2자리, 5자리까지 받을 수 있음
-		cout << msg << endl;
+		// 이동 메세지 보내기
+		char msg[PACKET_SIZE];
+		sprintf_s(msg, "u%2d%5d%5d", socket->num, (int)me->Pos().x, (int)me->Pos().y); // 유저 이동(u) 프로토콜
 		socket->SetMsg(msg);
 		socket->SendMessage();
 	}
@@ -51,7 +51,7 @@ void MainScene::Render() {
 	me->Render();
 	for (ZeroFont* chat : chats)
 		chat->Render();
-	for (auto user : users)
+	for (pair<int, ZeroSprite*> user : users)
 		user.second->Render();
 }
 
@@ -67,7 +67,6 @@ void MainScene::OnRecieveMessage(char* msg) {
 	for (ZeroFont* chat : chats)
 		chat->AddPosY(-30);
 	chats.push_back(testFont);
-
 }
 
 // 서버에서 플레이어 움직임을 받으면 그 플레이어를 움직인다.

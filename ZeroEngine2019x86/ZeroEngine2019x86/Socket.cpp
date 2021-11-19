@@ -57,7 +57,7 @@ void Socket::proc_recv() {
 			ZeroMemory(&buffer, PACKET_SIZE);
 			recv(server, buffer, PACKET_SIZE, 0);
 
-			cout << buffer << endl;
+			//cout << buffer << endl;
 
 			switch (buffer[0]) {
 
@@ -70,27 +70,23 @@ void Socket::proc_recv() {
 					break;
 				}
 				
-				// user movement (u(1) + client num(int) + direction(int))
+				// user movement (u(1) + client num(2) + pos.x(5) + pos.y(5))
 				case 'u': {
-					char num[2 + 1];
+					char num[2];
 					memcpy(&num, &buffer[1], 2);
-					num[2] = '\0';
-					char x[5 + 1];
-					memcpy(&x, &buffer[1 + 2], 5);
-					x[5] = '\0';
-					char y[5 + 1];
-					memcpy(&y, &buffer[1 + 2 + 5], 5);
-					y[5] = '\0';
+					char x[5];
+					memcpy(&x, &buffer[1+2], 5);
+					char y[5];
+					memcpy(&y, &buffer[1+2+5], 5);
 
 					mainScene->OnUserMove(atoi(num), atoi(x), atoi(y));
 					break;
 				}
 				
-				// join (j(1) + client num(int))
+				// join (j(1) + client num(2))
 				case 'j': {
-					char num[sizeof(int)+1];
-					memcpy(&num, &buffer[1], sizeof(int));
-					num[sizeof(int)] = '\0';
+					char num[2];
+					memcpy(&num, &buffer[1], 2);
 
 					if (Socket::num == -1)
 						Socket::num = atoi(num);
@@ -99,11 +95,10 @@ void Socket::proc_recv() {
 					break;
 				}
 				
-				// leave (l(1) + client num(int))
+				// leave (l(1) + client num(2))
 				case 'l': {
-					char num[sizeof(int)+1];
-					memcpy(&num, &buffer[1], sizeof(int));
-					num[sizeof(int)] = '\0';
+					char num[2];
+					memcpy(&num, &buffer[1], 2);
 
 					mainScene->OnUserLeave(atoi(num));
 					break;

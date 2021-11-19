@@ -65,13 +65,13 @@ void acceptingClients() {
 		
 		cout << "> Client #" << num << " joined" << endl;
 		char join_msg[PACKET_SIZE];
-		sprintf_s(join_msg, "j%d", num);
+		sprintf_s(join_msg, "j%d", num); // 입장(j) 프로토콜
 		char send_msg[PACKET_SIZE];
-		sprintf_s(send_msg, "m[#] Client #%d joined", num);
+		sprintf_s(send_msg, "m[#] Client #%d joined", num); // 메세지(m) 프로토콜
 
 		for (ClientSocket client : c) {
-			send(client.client, join_msg, strlen(join_msg), 0);
-			send(client.client, send_msg, strlen(send_msg), 0);
+			send(client.client, join_msg, (int)strlen(join_msg), 0);
+			send(client.client, send_msg, (int)strlen(send_msg), 0);
 		}
 
 		thread(recvData, c[num].client, num).detach();
@@ -92,13 +92,13 @@ void recvData(SOCKET s, int num) {
 
 			cout << "> Client #" << num << " left" << endl;
 			char leave_msg[PACKET_SIZE];
-			sprintf_s(leave_msg, "l%d", num);
+			sprintf_s(leave_msg, "l%d", num); // 퇴장(l) 프로토콜
 			char send_msg[PACKET_SIZE];
-			sprintf_s(send_msg, "m[#] Client #%d left", num);
+			sprintf_s(send_msg, "m[#] Client #%d left", num); // 메세지(m) 프로토콜
 
 			for (ClientSocket client : c) {
-				send(client.client, leave_msg, strlen(leave_msg), 0);
-				send(client.client, send_msg, strlen(send_msg), 0);
+				send(client.client, leave_msg, (int)strlen(leave_msg), 0);
+				send(client.client, send_msg, (int)strlen(send_msg), 0);
 			}
 			return;
 		}
@@ -113,27 +113,23 @@ void recvData(SOCKET s, int num) {
 				memcpy(msg, &buffer[1], sizeof(buffer)-1);
 
 				cout << "> [Client #" << num << "] " << msg << endl;
-				sprintf_s(send_msg, "m<Client #%d> %s", num, msg);
+				sprintf_s(send_msg, "m<Client #%d> %s", num, msg); // 메세지(m) 프로토콜
 				for (ClientSocket client : c)
-					send(client.client, send_msg, strlen(send_msg), 0);
+					send(client.client, send_msg, (int)strlen(send_msg), 0);
 				break;
 			
-			// user movement (u(1) + client num(int) + direction(int))
+			// user movement (u(1) + client num(2) + pos.x(5) + pos.y(5))
 			case 'u':
 				// 유저 이동
-				char num[2+1];
+				char num[2];
 				memcpy(&num, &buffer[1], 2);
-				num[2] = '\0';
-				char x[5+1];
+				char x[5];
 				memcpy(&x, &buffer[1+2], 5);
-				x[5] = '\0';
-				char y[5+1];
+				char y[5];
 				memcpy(&y, &buffer[1+2+5], 5);
-				y[5] = '\0';
 
-				cout << "> Client #" << atoi(num) << "(이)가 " << atoi(x) << ", " << atoi(y) << "(으)로 이동 " << endl;
 				for (ClientSocket client : c)
-					send(client.client, buffer, strlen(buffer), 0);
+					send(client.client, buffer, (int)strlen(buffer), 0);
 				break;
 		}
 	}
