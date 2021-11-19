@@ -10,7 +10,7 @@ ZeroConsole g_Console;
 INT WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, INT)
 {
 	int WindowWidth = 900;
-	int WindowHeight = 500;
+	int WindowHeight = 600;
 
 	ZeroApp->RegisterWindowSize(WindowWidth, WindowHeight);
 	WNDCLASSEX wc = { sizeof(WNDCLASSEX), CS_CLASSDC, ZeroApp->MsgProc, 0L, 0L,

@@ -8,6 +8,8 @@ MainScene::MainScene() {
 	kInputter = new KoreanInputter(socket);
 
 	me = new ZeroSprite("Texture/%s.png", "sample");
+	backGround = new ZeroSprite("Texture/%s.png", "tempBack2");
+	PushScene(backGround);
 	PushScene(me);
 }
 
@@ -20,19 +22,19 @@ void MainScene::Update(float eTime) {
 	bool moved = false;
 
 	// moving myself
-	if (ZeroInputMgr->GetKey('A') == INPUTMGR_KEYON) { 
+	if (ZeroInputMgr->GetKey('A') == INPUTMGR_KEYON && me->Pos().x > 0) {
 		me->AddPosX(-moveSpd * eTime); // ←
 		moved = true;
 	}
-	if (ZeroInputMgr->GetKey('D') == INPUTMGR_KEYON) {
+	if (ZeroInputMgr->GetKey('D') == INPUTMGR_KEYON && me->Pos().x < 500) {
 		me->AddPosX(moveSpd * eTime); // →
 		moved = true;
 	}
-	if (ZeroInputMgr->GetKey('W') == INPUTMGR_KEYON) {
+	if (ZeroInputMgr->GetKey('W') == INPUTMGR_KEYON && me->Pos().y > 0) {
 		me->AddPosY(-moveSpd * eTime); // ↑
 		moved = true;
 	}
-	if (ZeroInputMgr->GetKey('S') == INPUTMGR_KEYON) {
+	if (ZeroInputMgr->GetKey('S') == INPUTMGR_KEYON && me->Pos().y < 500) {
 		me->AddPosY(moveSpd * eTime); // ↓
 		moved = true;
 	}
@@ -48,6 +50,7 @@ void MainScene::Update(float eTime) {
 
 void MainScene::Render() {
 	ZeroIScene::Render();
+	backGround->Render();
 	me->Render();
 	for (ZeroFont* chat : chats)
 		chat->Render();
@@ -59,13 +62,13 @@ void MainScene::Render() {
 /* Socket.cpp | 서버에서 메세지를 받았을 때 호출됨 */
 // 새로운 채팅 텍스트를 띄운다.
 void MainScene::OnRecieveMessage(char* msg) {
-	ZeroFont* testFont = new ZeroFont(30, msg, (char*)"나눔고딕");
-	testFont->SetColor(0xffff0000);
-	testFont->SetPos(300, 400);
+	ZeroFont* testFont = new ZeroFont(12, msg, (char*)"나눔고딕");
+	testFont->SetColor(0xff000000);
+	testFont->SetPos(620, 550);
 	PushScene(testFont);
 
 	for (ZeroFont* chat : chats)
-		chat->AddPosY(-30);
+		chat->AddPosY(-20);
 	chats.push_back(testFont);
 }
 

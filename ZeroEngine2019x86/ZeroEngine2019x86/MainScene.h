@@ -11,6 +11,7 @@ private:
 	Socket* socket;
 	KoreanInputter* kInputter;
 	ZeroSprite* me;
+	ZeroSprite* backGround;
 	map<int, ZeroSprite*> users;
 	list<ZeroFont*> chats;
 
