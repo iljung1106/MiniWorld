@@ -21,8 +21,9 @@ private:
 	bool isConnected = false;
 	thread* p;
 	thread tr;
+	char address[20] = "127.0.0.1";
 public:
-	Socket(MainScene* mainScene);
+	Socket(MainScene* mainScene, char* addrs);
 	~Socket();
 	const char* msg;
 	MainScene* mainScene;

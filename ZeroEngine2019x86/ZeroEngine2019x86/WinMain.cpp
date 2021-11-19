@@ -9,6 +9,9 @@ ZeroConsole g_Console;
 
 INT WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, INT)
 {
+	char addr[20] = " ";
+	cin.getline(addr, 20);
+
 	int WindowWidth = 900;
 	int WindowHeight = 600;
 
@@ -35,7 +38,7 @@ INT WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, INT)
 		UpdateWindow(hWnd);
 
 		//여기서 처음 시작하는 Scene을 정한다
-		ZeroSceneMgr->ChangeScene(new MainScene());
+		ZeroSceneMgr->ChangeScene(new MainScene(""));
 
 
 		MSG msg;

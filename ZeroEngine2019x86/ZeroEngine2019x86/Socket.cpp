@@ -2,8 +2,9 @@
 #include "Socket.h"
 #include "MainScene.h"
 
-Socket::Socket(MainScene* mainScene) {
+Socket::Socket(MainScene* mainScene, char* addrs) {
 	this->mainScene = mainScene;
+	strcpy(this->address, addrs);
 
 	WSADATA wsa;
 	if (WSAStartup(MAKEWORD(2, 2), &wsa)) {
@@ -23,7 +24,8 @@ Socket::Socket(MainScene* mainScene) {
 	SOCKADDR_IN addr = {0,};
 	addr.sin_family = AF_INET;
 	addr.sin_port = htons(4444); // 器飘
-	addr.sin_addr.s_addr = inet_addr("211.204.30.40"); // 林家
+	//addr.sin_addr.s_addr = inet_addr("211.204.30.40"); // 林家
+	addr.sin_addr.s_addr = inet_addr(address); // 林家
 
 	while (connect(server, (SOCKADDR*)&addr, sizeof(addr)));
 	isConnected = true;
