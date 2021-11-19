@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "MainScene.h"
 
-MainScene::MainScene() {
-	socket = new Socket(this);
+MainScene::MainScene(char* addr) {
+	socket = new Socket(this, addr);
 	socket->SetMsg("test");
 
 	kInputter = new KoreanInputter(socket);

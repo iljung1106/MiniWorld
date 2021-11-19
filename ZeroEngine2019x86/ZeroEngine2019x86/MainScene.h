@@ -21,7 +21,7 @@ private:
 	void Render();
 
 public:
-	MainScene();
+	MainScene(char* addr);
 
 	void OnRecieveMessage(char* msg);
 	void OnUserMove(int num, int x, int y);
